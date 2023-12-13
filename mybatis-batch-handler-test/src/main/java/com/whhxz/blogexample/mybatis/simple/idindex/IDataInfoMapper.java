@@ -1,4 +1,4 @@
-package com.whhxz.blogexample.mybatis.simple;
+package com.whhxz.blogexample.mybatis.simple.idindex;
 
 import org.apache.ibatis.annotations.Param;
 

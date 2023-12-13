@@ -1,6 +1,5 @@
-package com.whhxz.blogexample.mybatis.simple;
+package com.whhxz.blogexample.mybatis.simple.idindex;
 
-import com.whhxz.blogexample.mybatis.IDbUpdateHandler;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -15,15 +14,12 @@ import java.util.Random;
 
 public class InsertTest {
     static SqlSessionFactory sqlSessionFactory;
-    static IDbUpdateHandler handler;
 
     @BeforeClass
     public static void init() throws Exception {
-        String resource = "simple/mybatis.xml";
+        String resource = "simple/idindex/mybatis.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        handler = new DbUpdateHandler(sqlSessionFactory);
-        InsertTest.sqlSessionFactory = sqlSessionFactory;
+        InsertTest.sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     }
 
     @Test

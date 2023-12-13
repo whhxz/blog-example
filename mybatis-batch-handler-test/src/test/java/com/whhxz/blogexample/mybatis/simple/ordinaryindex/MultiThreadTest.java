@@ -1,6 +1,7 @@
-package com.whhxz.blogexample.mybatis.simple;
+package com.whhxz.blogexample.mybatis.simple.ordinaryindex;
 
 import com.whhxz.blogexample.mybatis.IDbUpdateHandler;
+import com.whhxz.blogexample.mybatis.simple.idindex.DbUpdateHandler;
 import com.whhxz.blogexample.mybatis.util.TimeRecord;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,7 +20,7 @@ public class MultiThreadTest {
 
     @BeforeClass
     public static void init() throws Exception {
-        String resource = "simple/mybatis.xml";
+        String resource = "simple/idindex/mybatis.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         threads = new Thread[10];
@@ -59,7 +60,7 @@ public class MultiThreadTest {
     @Test
     public void updateTempTable()throws Exception {
         TimeRecord timeRecord = new TimeRecord();
-        newThread((d) -> d.updateTempTable(10000, 1000));
+        newThread((d) -> d.updateTempTable(10000, 10));
         startThread();
         latch.await();
         timeRecord.stop();

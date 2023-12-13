@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whhxz.blogexample.mybatis.simple.ordinaryindex.IDataInfoMapper">
+    <insert id="insert">
+        insert into simple_ordinary_index(id, code1, code2, name1, name2)
+        values (#{item.id}, #{item.code1}, #{item.code2}, #{item.name1}, #{item.name2})
+    </insert>
+
+    <update id="update">
+        update simple_ordinary_index set name1=#{item.name1}
+        where code1 = #{item.code1}
+    </update>
+
+    <update id="updateList1">
+        <foreach collection="datas" item="item" separator=";">
+            update simple_ordinary_index set name1=#{item.name1}
+            where code1 = #{item.code1}
+        </foreach>
+    </update>
+    <update id="updateList2">
+        update simple_ordinary_index t,
+        (
+        <foreach collection="datas" item="item" separator=" UNION ALL ">
+            select #{item.code1} as code1, #{item.name1} as name1
+        </foreach>
+        ) v
+        set t.name1 = v.name1
+        where t.code1 = v.code1
+    </update>
+</mapper>

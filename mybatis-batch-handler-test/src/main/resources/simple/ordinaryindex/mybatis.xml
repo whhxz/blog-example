@@ -20,6 +20,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="simple/DataInfoMapper.xml"/>
+        <mapper resource="simple/ordinaryindex/DataInfoMapper.xml"/>
     </mappers>
 </configuration>

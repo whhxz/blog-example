@@ -1,4 +1,4 @@
-package com.whhxz.blogexample.mybatis.simple;
+package com.whhxz.blogexample.mybatis.simple.ordinaryindex;
 
 import com.whhxz.blogexample.mybatis.IDbUpdateHandler;
 import org.apache.ibatis.session.ExecutorType;
@@ -21,10 +21,11 @@ public class DbUpdateHandler implements IDbUpdateHandler {
         Random random = new Random();
         try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
             IDataInfoMapper mapper = sqlSession.getMapper(IDataInfoMapper.class);
+            int maxId = mapper.maxId();
             for (int i = 0; i < max; i++) {
-                int id = random.nextInt(max);
-                String tmp = String.valueOf(random.nextInt(99999999));
-                DataInfo data = new DataInfo(id, tmp, null);
+                String code1 = String.valueOf(random.nextInt(maxId) + 1);
+                String name1 = String.valueOf(random.nextInt(99999999));
+                DataInfo data = new DataInfo(null, code1, null, name1, null);
                 mapper.update(data);
             }
         }
@@ -35,14 +36,14 @@ public class DbUpdateHandler implements IDbUpdateHandler {
         Random random = new Random();
         try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, true)) {
             IDataInfoMapper mapper = sqlSession.getMapper(IDataInfoMapper.class);
+            int maxId = mapper.maxId();
             for (int i = 0; i < max; i++) {
                 if (i != 0 && i % maxOneTime == 0) {
                     sqlSession.flushStatements();
-                    sqlSession.commit();
                 }
-                int id = random.nextInt(max);
-                String tmp = String.valueOf(random.nextInt(99999999));
-                DataInfo data = new DataInfo(id, tmp, null);
+                String code1 = String.valueOf(random.nextInt(maxId) + 1);
+                String name1 = String.valueOf(random.nextInt(99999999));
+                DataInfo data = new DataInfo(null, code1, null, name1, null);
                 mapper.update(data);
             }
             sqlSession.flushStatements();
@@ -54,16 +55,16 @@ public class DbUpdateHandler implements IDbUpdateHandler {
         Random random = new Random();
         try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
             IDataInfoMapper mapper = sqlSession.getMapper(IDataInfoMapper.class);
-
+            int maxId = mapper.maxId();
             List<DataInfo> datas = new ArrayList<>(1000);
             for (int i = 0; i < max; i++) {
                 if (i != 0 && i % maxOneTime == 0) {
                     mapper.updateList1(datas);
                     datas = new ArrayList<>(1000);
                 }
-                int id = random.nextInt(max);
-                String tmp = String.valueOf(random.nextInt(99999999));
-                DataInfo data = new DataInfo(id, tmp, null);
+                String code1 = String.valueOf(random.nextInt(maxId) + 1);
+                String name1 = String.valueOf(random.nextInt(99999999));
+                DataInfo data = new DataInfo(null, code1, null, name1, null);
                 datas.add(data);
             }
             if (!datas.isEmpty()) {
@@ -77,15 +78,16 @@ public class DbUpdateHandler implements IDbUpdateHandler {
         Random random = new Random();
         try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
             IDataInfoMapper mapper = sqlSession.getMapper(IDataInfoMapper.class);
+            int maxId = mapper.maxId();
             List<DataInfo> datas = new ArrayList<>(maxOneTime);
             for (int i = 0; i < max; i++) {
                 if (i != 0 && i % maxOneTime == 0) {
                     mapper.updateList2(datas);
                     datas = new ArrayList<>(maxOneTime);
                 }
-                int id = random.nextInt(max);
-                String tmp = String.valueOf(random.nextInt(99999999));
-                DataInfo data = new DataInfo(id, tmp, null);
+                String code1 = String.valueOf(random.nextInt(maxId) + 1);
+                String name1 = String.valueOf(random.nextInt(99999999));
+                DataInfo data = new DataInfo(null, code1, null, name1, null);
                 datas.add(data);
             }
             if (!datas.isEmpty()) {
