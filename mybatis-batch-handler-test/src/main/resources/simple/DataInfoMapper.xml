@@ -3,7 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.whhxz.blogexample.mybatis.simple.IDataInfoMapper">
-    <select id="demo" resultType="java.lang.Integer">
-        select 1
-    </select>
+    <insert id="insert">
+        insert into simple(code, name)
+        values (#{item.code}, #{item.name})
+    </insert>
+
+    <update id="update">
+        update simple set code=#{item.code}
+        where id = #{item.id}
+    </update>
+
+    <update id="updateList1">
+        <foreach collection="datas" item="item" separator=";">
+            update simple set code=#{item.code}
+            where id = #{item.id}
+        </foreach>
+    </update>
+    <update id="updateList2">
+        update simple t,
+        (
+        <foreach collection="datas" item="item" separator=" UNION ALL ">
+            select #{item.id} as id, #{item.code} as code
+        </foreach>
+        ) v
+        set t.code = v.code
+        where t.id = v.id
+    </update>
 </mapper>

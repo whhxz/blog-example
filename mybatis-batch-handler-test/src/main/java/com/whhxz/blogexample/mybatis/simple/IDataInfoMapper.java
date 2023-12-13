@@ -1,5 +1,15 @@
 package com.whhxz.blogexample.mybatis.simple;
 
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Collection;
+
 public interface IDataInfoMapper {
-    Integer demo();
+    void insert(@Param("item") DataInfo data);
+
+    void update(@Param("item") DataInfo data);
+
+    void updateList1(@Param("datas") Collection<DataInfo> datas);
+
+    void updateList2(@Param("datas") Collection<DataInfo> datas);
 }
