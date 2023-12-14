@@ -1,7 +1,6 @@
 package com.whhxz.blogexample.mybatis.simple.ordinaryindex;
 
 import com.whhxz.blogexample.mybatis.IDbUpdateHandler;
-import com.whhxz.blogexample.mybatis.simple.idindex.DbUpdateHandler;
 import com.whhxz.blogexample.mybatis.util.TimeRecord;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -20,7 +19,7 @@ public class MultiThreadTest {
 
     @BeforeClass
     public static void init() throws Exception {
-        String resource = "simple/idindex/mybatis.xml";
+        String resource = "simple/ordinaryindex/mybatis.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         threads = new Thread[10];
@@ -29,9 +28,10 @@ public class MultiThreadTest {
 
     @Test
     public void update() throws Exception {
-        //68.440000
+        //1w/1k 87.178000
+        //1w/100 71.128000
         TimeRecord timeRecord = new TimeRecord();
-        newThread((d) -> d.update(10000, 1000));
+        newThread((d) -> d.update(10000, 100));
         startThread();
         latch.await();
         timeRecord.stop();
@@ -39,9 +39,10 @@ public class MultiThreadTest {
 
     @Test
     public void updateBatch() throws Exception {
-        //57.372000
+        //1w/1k 58.657000
+        //1w/100 61.239000
         TimeRecord timeRecord = new TimeRecord();
-        newThread((d) -> d.updateBatch(10000, 1000));
+        newThread((d) -> d.updateBatch(10000, 100));
         startThread();
         latch.await();
         timeRecord.stop();
@@ -49,9 +50,10 @@ public class MultiThreadTest {
 
     @Test
     public void updateMultiSql() throws Exception{
-        //45.233000
+        //1w/1k 47.542000
+        //1w/100 46.966000
         TimeRecord timeRecord = new TimeRecord();
-        newThread((d) -> d.updateMultiSql(10000, 1000));
+        newThread((d) -> d.updateMultiSql(10000, 100));
         startThread();
         latch.await();
         timeRecord.stop();
@@ -59,6 +61,8 @@ public class MultiThreadTest {
 
     @Test
     public void updateTempTable()throws Exception {
+        //1w/1k
+        //1w/10  9.674000
         TimeRecord timeRecord = new TimeRecord();
         newThread((d) -> d.updateTempTable(10000, 10));
         startThread();

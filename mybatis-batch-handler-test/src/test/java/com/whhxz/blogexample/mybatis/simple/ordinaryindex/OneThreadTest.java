@@ -23,11 +23,11 @@ public class OneThreadTest {
 
     @Test
     public void update() {
-        //10w/1k 445.710000
+        //10w/1k 453.156000
         //1w/1k 47.678000
         //1w/100 46.739000
         TimeRecord timeRecord = new TimeRecord();
-        handler.update(10000, 100);
+        handler.update(10000, 1000);
         timeRecord.stop();
     }
 
@@ -37,7 +37,7 @@ public class OneThreadTest {
         //1w/1k 42.363000
         //1w/100 41.520000
         TimeRecord record = new TimeRecord();
-        handler.updateBatch(10000, 1000);
+        handler.updateBatch(100000, 1000);
         record.stop();
     }
 
