@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>mybatis-batch-handler-test</module>
+        <module>generics-get</module>
     </modules>
     <properties>
         <maven.compiler.target>21</maven.compiler.target>
