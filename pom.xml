@@ -11,6 +11,7 @@
     <modules>
         <module>mybatis-batch-handler-test</module>
         <module>generics-get</module>
+        <module>design-mode</module>
     </modules>
     <properties>
         <maven.compiler.target>21</maven.compiler.target>
