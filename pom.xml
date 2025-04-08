@@ -15,6 +15,7 @@
         <module>rate-limiter</module>
         <module>junit</module>
         <module>log4j2-trace</module>
+        <module>mqtt-client</module>
     </modules>
     <properties>
         <maven.compiler.target>21</maven.compiler.target>
