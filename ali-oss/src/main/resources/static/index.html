@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.20.0.min.js"></script>
+    <style>
+        .container {
+            width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    上传文件<input type="file" id="upload">
+</div>
+<script type="text/javascript">
+    document.getElementById("upload").addEventListener("change", async (e) => {
+        let file = e.target.files[0]
+        let resp = await fetch('/api/oss/stsToken', {
+            method: 'GET'
+        })
+        let body = await resp.json()
+        const client = new OSS({
+            region: 'cn-wuhan-lr',
+            endpoint: 'https://oss-cn-wuhan-lr.aliyuncs.com',
+            // 开启V4版本签名。
+            authorizationV4: true,
+            accessKeyId: body.accessKeyId,
+            accessKeySecret: body.accessKeySecret,
+            stsToken: body.securityToken,
+            bucket: 'whh-backup'
+        });
+        const r1 = await client.put(`demo/${file.name}`, e.target.files[0]);
+        console.log('put success: %j', r1);
+    })
+</script>
+</body>
+</html>
